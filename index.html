@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>list chapter</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="tabel"></div>
+    <script>
+        cp = 1;
+        $.get('https://jpmtl.com/v2/chapter/1478/list?state=published&structured=true&direction=false',function(data){
+            for(v=0; v<(data.length); v++){
+                vol = $('<div class="volume"></div>').text(data[v]['volume_title'])
+                $("#tabel").append(vol);
+                //$("#tabel").append("<br>");
+                for(c=0; c<(Object.keys(data[v]['chapters']).length); c++){
+                    if(c==0){
+                        $("#tabel").append("<div id='volume"+(v+1)+"'></div>")
+                    }
+                    //console.log(data[v]['chapters'][c]['title']);
+                    title = (cp++)+". "+data[v]['chapters'][c]['title'];
+                    ch = $('<a class="list-group-item list-group-item-action chapter"></a>').text(title);
+                    ch.attr("href", "chapter#"+data[v]['chapters'][c]['id']);
+                    $("#volume"+(v+1)).append(ch);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

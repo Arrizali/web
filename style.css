@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap');
+.volume{
+    font-weight: bold;
+    padding: 8px;
+    font-family: IBM Plex Sans;
+    size: 14px;
+    font-weight: 700;
+}
+.chapter{
+    font-family: IBM Plex Sans;
+    font-weight: 400;
+}
