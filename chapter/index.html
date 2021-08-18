@@ -10,20 +10,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div ></div>
+    <div id="readarea"></div>
     <script>
         url = $(location).attr("href");
         anchor = url.substring(url.indexOf("#")+1);
         //https://jpmtl.com/v2/chapter/[]
         $.get("https://jpmtl.com/v2/chapter/"+anchor,function(data){
             document.title = data['chapter']['title'];
-            console.log(data['chapter']['content'].length);
+            // console.log(data['chapter']['content'].length);
             for(i=0; i<(data['chapter']['content'].length); i++){
-                
+                par = $("<p class='paragraph'></p>").text(data['chapter']['content'][i]['content']);
+                $("#readarea").append(par);
             }
             //Object.keys(data[v]['chapters']).length)
         })
 
-    </script>
+    </script><p></p>
 </body>
 </html>
