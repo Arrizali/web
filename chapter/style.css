@@ -22,7 +22,7 @@
     padding: 8px;
     font-family: "IBM Plex Sans";
     size: 1px;
-    font-weight: 700;
+    font-weight: 400;
     font-weight: lighter;
 }
 .chapter{
@@ -62,16 +62,22 @@
     margin: 12px;
     color: #000;
 }
+
 .nav-box{
-    height: 55px;
-    width: 55px;
+    height: 29px;
+    width: 29px;
     display: inline-flex;
-    align-items:center;
-    justify-content: center;
+    /* align-items:center;
+    justify-content: center; */
+    position: relative;
+    transform: translate(10%,7%)
+
+
 }
+
 svg{
-    width: 2.5rem;
-    height: 2.5rem;
+    height: 29px;
+    width: 29px;
 }
 
 p {

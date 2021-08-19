@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="prev"></div>
     <div id="readarea">
         <p id="title"></p>
     </div>
@@ -61,8 +62,10 @@
             scrl();
             //Object.keys(data[v]['chapters']).length)
         });
+
         $.get('https://jpmtl.com/v2/chapter/1478/list?state=published&structured=true&direction=false',function(data){
             cp = 1;
+            li = 1;
             for(v=0; v<(data.length); v++){
                 vol = $('<div class="volume"></div>').text(data[v]['volume_title'])
                 $("#tabel").append(vol);
@@ -76,6 +79,7 @@
                     ch = $('<a class="list-group-item list-group-item-action chapter"></a>').text(title);
                     // ch.attr("href", "#"+data[v]['chapters'][c]['id']);
                     // ch.attr("onclick", "setTimeout(function() {location.reload()}, 400)");
+                    ch.attr("id", ""+data[v]['chapters'][c]['id']);
                     if(anchor == data[v]['chapters'][c]['id']){
                         ch.addClass("this")
                     }else{
@@ -83,10 +87,39 @@
                         ch.attr("onclick", "setTimeout(function() {location.reload()}, 400)");
                     }
                     $("#volume"+(v+1)).append(ch);
+                    if (li == 1){
+                        datPer = data[v]['chapters'][c]['id'];
+                        li++;
+                    }else{
+                        datTer = data[v]['chapters'][c]['id'];
+                    }
 
                 }
             }
             document.querySelector('.this').scrollIntoView();
+            
+            for (i=0;i<($(".chapter").length);i++){
+                if ($(".chapter")[i].getAttribute("id") == anchor && anchor == datPer){
+                    window.b = $(".chapter")[(i+1)].getAttribute("id");
+                    // console.log(window.b);
+                }else if($(".chapter")[i].getAttribute("id") == anchor && anchor > datPer && anchor < datTer){
+                    window.a = $(".chapter")[(i-1)].getAttribute("id");
+                    window.b = $(".chapter")[(i+1)].getAttribute("id");
+                    // console.log(window.a);
+                    // console.log(window.b);
+                }else if($(".chapter")[i].getAttribute("id") == anchor && anchor == datTer){
+                    window.a = $(".chapter")[(i-1)].getAttribute("id");
+                    // console.log(window.a);
+                }
+                
+            }
+            if (window.a==undefined){
+                $("#nav-prev").remove();
+            }
+            if (window.b==undefined){
+                $("#nav-next").remove();
+            }
+            
         })
         
     </script>
@@ -95,7 +128,6 @@
             //set scroll position in session storage
             sessionStorage.scrollPos = $(window).scrollTop();
         });
-        load = false
         function scrl(){
             $(window).scrollTop(sessionStorage.scrollPos || 0);
         }
@@ -105,10 +137,16 @@
             t++;
         })
         $("#nav-prev").click(function(){
-            console.log("nav-prev")
+            window.location.href="#"+window.a;
+            setTimeout(function() {
+                location.reload()
+            },400)
         })
         $("#nav-next").click(function(){
-            console.log("nav-next")
+            window.location.href="#"+window.b;
+            setTimeout(function() {
+                location.reload()
+            },400)
         })
         p = 0;
         wtbl = $("#tabel").css("width");
